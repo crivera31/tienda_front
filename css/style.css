@@ -1,0 +1,85 @@
+body {
+  background: #ededed  !important;
+}
+#search {
+  width: 380px;
+}
+.price-range-slider {
+  /* width: 100%; */
+  float: left;
+  /* padding: 10px 20px; */
+}
+.sidebar-price h4 {
+  margin-bottom: 25px;
+}
+.price-range-slider .range-value {
+  /* margin: 0; */
+  margin-top: -10px;
+}
+.price-range-slider .range-value input {
+  width: 100%;
+  background: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: initial;
+  box-shadow: none;
+  border: none;
+  margin: 20px 0 20px 0;
+}
+.price-range-slider .range-bar {
+  border: none;
+  background: #000;
+  height: 3px;
+  width: 96%;
+  margin-left: 8px;
+}
+.price-range-slider .range-bar .ui-slider-range {
+  background: #06b9c0;
+}
+.price-range-slider .range-bar .ui-slider-handle {
+  border: none;
+  border-radius: 25px;
+  background: #fff;
+  border: 2px solid #06b9c0;
+  height: 17px;
+  width: 17px;
+  top: -0.52em;
+  cursor: pointer;
+}
+.price-range-slider .range-bar .ui-slider-handle + span {
+  background: #06b9c0;
+}
+
+/*--- /.price-range-slider ---*/
+
+.card-body {
+  background: #ececec;
+  border: 1px solid #6c757d;
+  color: rgb(95 95 95 / 80%);
+}
+.nombre {
+  text-align: center;
+}
+
+.cart {
+  border-radius: 5px -2px / 50px 15px;
+  background: #b1b1b1;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  float: right;
+  margin-top: -38px;
+}
+i {
+  color: #fff;
+}
+.card-title {
+  font-size: 16px;
+}
+.item {
+  height: 250px;
+}
+.no_encontrado {
+  margin: auto;
+  font-size: 24px;
+  font-family: monospace;
+}

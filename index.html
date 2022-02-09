@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tienda Online</title>
+  <link rel='stylesheet' href='css/bootstrap.min.css'>
+  <link rel='stylesheet' href='css/all.min.css'>
+  <link rel='stylesheet' href='css/jquery-ui.css'>
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand flex-grow-1" href="#">Bsale Test Tienda</a>
+        <div class="flex-grow-1 d-flex">
+            <form class="form-inline flex-nowrap bg-light mx-0 mx-lg-auto rounded p-1">
+                <input class="form-control mr-sm-2" type="search" name="search" id="search" autocomplete="off" placeholder="Buscar por nombre..." aria-label="Search">
+            </form>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link"><i class="fas fa-shopping-cart fa-lg" style="color: #06b9c0;"></i></a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+  <div class="container mx-auto mt-5">
+    <div class="row">
+      <div class="col-lg-3 col-md-5">
+        <div class="sidebar">
+          <div class="sidebar-price">
+            <h4>Precio</h4>
+            <div class="price-range-slider">
+              <div id="slider-range" class="range-bar"></div>
+              <p class="range-value">
+                <input type="text" id="amount" readonly>
+              </p>
+            </div>
+          </div>
+          <div class="sidebar-category">
+            <h4>Categoria</h4>
+            <div class="row mb-5">
+              <div class="col-md-9">
+              <div class="input-group mb-3">
+                <select class="custom-select" id="category">
+                  <option value="0" selected disabled>Choose...</option>
+                </select>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-7">
+        <div id="resultado"></div>
+        <div class="row" id="lstProducto">
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        <li class="page-item">
+          <a class="page-link" onclick="changePage(-6)" href="javascript:void(0);">Anterior</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" onclick="changePage(6)" href="javascript:void(0);">Siguiente</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src='js/jquery.min.js'></script>
+    <script src='js/jquery-ui.min.js'></script>
+    <script src="js/sweetalert2.min.js"></script>
+    <script src="js/js.js"></script>
+</body>
+
+</html>
