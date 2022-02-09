@@ -8,6 +8,7 @@ Función `getProducts` que recibe un parámetro `desde` que su valor inicial es 
 
 ```json
 function getProducts(desde = 0) {
+  $("#resultado").html("");
   const params = new URLSearchParams({
     desde: desde
   });
@@ -17,6 +18,7 @@ function getProducts(desde = 0) {
     })
     .then(function (response) {
       if (response.status !== 200) {
+        Swal.fire("Error del servidor.","","error");
         console.log(
           "Looks like there was a problem. Status Code: " + response.status
         );
@@ -48,7 +50,7 @@ function getProducts(desde = 0) {
       });
     })
     .catch(function (err) {
-      Swal.fire("Error del servidor.","","error");
+      Swal.fire("Error conexión del servidor.","","error");
     });
 }
 ```
@@ -77,6 +79,7 @@ function getCategories(){
     })
       .then(function(response) {
         if (response.status !== 200) {
+          Swal.fire("Error del servidor.","","error");
           console.log(
             "Looks like there was a problem. Status Code: " + response.status
           );
@@ -95,6 +98,7 @@ function getCategories(){
         });
       })
       .catch(function(err) {
+        Swal.fire("Error del servidor","","error");
         console.log("Fetch Error: ", err);
       });
 }
@@ -102,6 +106,7 @@ function getCategories(){
 
 ```json
 $("#category").change(function() {
+  $("#resultado").html("");
   idCategoria = $(this).val();
 
   const params = new URLSearchParams({
@@ -114,7 +119,6 @@ $("#category").change(function() {
       .then(function(response) {
         console.log(response);
         if (response.status !== 200) {
-          // alert('No se encontro registros')
           $("#lstProducto").html('<p class="no_encontrado">No hay registros</p>');
           console.log(
             "Looks like there was a problem. Status Code: " + response.status
@@ -122,7 +126,7 @@ $("#category").change(function() {
           return;
         }
         response.json().then(function(data) {
-          console.log(data);
+          // console.log(data);
           let lstProduct = data.data.rows;
           let template = "";
           lstProduct.forEach(data => {
@@ -147,7 +151,8 @@ $("#category").change(function() {
         });
       })
       .catch(function(err) {
-        console.log("Fetch Error: ", err);
+        Swal.fire("Error del servidor.","","error");
+        // console.log("Fetch Error: ", err);
       });
 });
 ```
@@ -199,20 +204,20 @@ function searchProducts(search) {
         });
       })
       .catch(function(err) {
-        console.log("Fetch Error: ", err);
+        Swal.fire("Error del servidor.","","error");
       });
 }
 ```
 
 ```json
-      $(document).on('keypress',function(e) {
+  $(document).on('keypress',function(e) {
     if(e.which == 13) {
-      console.log($('#search').val());
+      //console.log($('#search').val());
       e.preventDefault();
       if ($('#search').val()) {
         let bloque = '<h4>Resultados de la búsqueda para: <span class="badge badge-secondary">'+$('#search').val()+'</span></h4>';
         $("#resultado").html(bloque);
-        console.log('first');
+        //console.log('first');
       searchProducts($('#search').val());
       $('#search').val('')
       } else {
@@ -240,12 +245,13 @@ $( "#slider-range" ).slider({
       hasta: hasta
     });
 
+    $("#resultado").html("");
+    
     let url = url_base + `api/search/price?${params}`;
     fetch(url, {
       method: "GET"
     })
       .then(function(response) {
-        console.log(response);
         if (response.status !== 200) {
           $("#lstProducto").html('<div class="alert alert-primary col-md-6 offset-md-4" style="text-align:center;" role="alert">No hay registros.</div>');
           console.log(
@@ -254,7 +260,7 @@ $( "#slider-range" ).slider({
           return;
         }
         response.json().then(function(data) {
-          console.log(data);
+          // console.log(data);
           let lstProduct = data.products;
           let template = "";
           lstProduct.forEach(data => {
@@ -279,8 +285,10 @@ $( "#slider-range" ).slider({
         });
       })
       .catch(function(err) {
-        console.log("Fetch Error: ", err);
+        Swal.fire("Error del servidor.","","error");
       });
   }
 });
+$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
 ```

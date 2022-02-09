@@ -3,7 +3,7 @@
   let desde = 0;
   let url_base = 'https://bsale-tienda.herokuapp.com/';
   let idCategoria = 0;
-  
+
   /** buscar si presiona tecla ENTER*/
   $(document).on('keypress',function(e) {
     if(e.which == 13) {
@@ -28,6 +28,7 @@
  * recibe el parámetro por default DESDE=0 y va cambiando DESDE en el front de 6 en 6(datos a mostrar por pagina)
 */
 function getProducts(desde = 0) {
+  $("#resultado").html("");
   const params = new URLSearchParams({
     desde: desde
   });
@@ -37,9 +38,10 @@ function getProducts(desde = 0) {
     })
     .then(function (response) {
       if (response.status !== 200) {
-        // console.log(
-        //   "Looks like there was a problem. Status Code: " + response.status
-        // );
+        Swal.fire("Error del servidor.","","error");
+        console.log(
+          "Looks like there was a problem. Status Code: " + response.status
+        );
         return;
       }
       response.json().then(function (data) {
@@ -68,7 +70,7 @@ function getProducts(desde = 0) {
       });
     })
     .catch(function (err) {
-      Swal.fire("Error del servidor.","","error");
+      Swal.fire("Error conexión del servidor.","","error");
     });
 }
 /**FUNCION QUE REALIZA EL PAGINADO, QUE SERAN 6 REGISTROS POR PAGINA
@@ -94,9 +96,10 @@ function getCategories(){
     })
       .then(function(response) {
         if (response.status !== 200) {
-          // console.log(
-          //   "Looks like there was a problem. Status Code: " + response.status
-          // );
+          Swal.fire("Error del servidor.","","error");
+          console.log(
+            "Looks like there was a problem. Status Code: " + response.status
+          );
           return;
         }
         response.json().then(function(data) {
@@ -112,11 +115,13 @@ function getCategories(){
         });
       })
       .catch(function(err) {
-        // console.log("Fetch Error: ", err);
+        Swal.fire("Error del servidor","","error");
+        console.log("Fetch Error: ", err);
       });
 }
 /**EVENTO PARA OBTENER EL ID DE LA CATEGORIA SELECCIONADA, Y MOSTRAR SUS PRODUCTOS */
 $("#category").change(function() {
+  $("#resultado").html("");
   idCategoria = $(this).val();
 
   const params = new URLSearchParams({
@@ -129,11 +134,10 @@ $("#category").change(function() {
       .then(function(response) {
         console.log(response);
         if (response.status !== 200) {
-          // alert('No se encontro registros')
           $("#lstProducto").html('<p class="no_encontrado">No hay registros</p>');
-          // console.log(
-          //   "Looks like there was a problem. Status Code: " + response.status
-          // );
+          console.log(
+            "Looks like there was a problem. Status Code: " + response.status
+          );
           return;
         }
         response.json().then(function(data) {
@@ -162,6 +166,7 @@ $("#category").change(function() {
         });
       })
       .catch(function(err) {
+        Swal.fire("Error del servidor.","","error");
         // console.log("Fetch Error: ", err);
       });
 });
@@ -179,9 +184,9 @@ function searchProducts(search) {
         console.log(response);
         if (response.status !== 200) {
           $("#lstProducto").html('<div class="alert alert-primary col-md-6 offset-md-4" style="text-align:center;" role="alert">No hay registros.</div>');
-          // console.log(
-          //   "Looks like there was a problem. Status Code: " + response.status
-          // );
+          console.log(
+            "Looks like there was a problem. Status Code: " + response.status
+          );
           return;
         }
         response.json().then(function(data) {
@@ -209,7 +214,7 @@ function searchProducts(search) {
         });
       })
       .catch(function(err) {
-        console.log("Fetch Error: ", err);
+        Swal.fire("Error del servidor.","","error");
       });
 }
 /**EVENTO PARA EL FILTRADO DE PRODUCTO(S) POR EL RANGO DE PRECIO */
@@ -227,17 +232,18 @@ $( "#slider-range" ).slider({
       hasta: hasta
     });
 
+    $("#resultado").html("");
+    
     let url = url_base + `api/search/price?${params}`;
     fetch(url, {
       method: "GET"
     })
       .then(function(response) {
-        // console.log(response);
         if (response.status !== 200) {
           $("#lstProducto").html('<div class="alert alert-primary col-md-6 offset-md-4" style="text-align:center;" role="alert">No hay registros.</div>');
-          // console.log(
-          //   "Looks like there was a problem. Status Code: " + response.status
-          // );
+          console.log(
+            "Looks like there was a problem. Status Code: " + response.status
+          );
           return;
         }
         response.json().then(function(data) {
@@ -266,7 +272,7 @@ $( "#slider-range" ).slider({
         });
       })
       .catch(function(err) {
-        // console.log("Fetch Error: ", err);
+        Swal.fire("Error del servidor.","","error");
       });
   }
 });
