@@ -1,8 +1,8 @@
   /**variables */
   let total_reg = 0;
   let desde = 0;
-  // let url_base = 'https://bsale-tienda.herokuapp.com/';
-  let url_base = 'http://localhost:3005/';
+  let url_base = 'https://bsale-tienda.herokuapp.com/';
+  // let url_base = 'http://localhost:3005/';
   let idCategoria = 0;
 
   /** buscar si presiona tecla ENTER*/
