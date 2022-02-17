@@ -1,7 +1,8 @@
   /**variables */
   let total_reg = 0;
   let desde = 0;
-  let url_base = 'https://bsale-tienda.herokuapp.com/';
+  // let url_base = 'https://bsale-tienda.herokuapp.com/';
+  let url_base = 'http://localhost:3005/';
   let idCategoria = 0;
 
   /** buscar si presiona tecla ENTER*/
@@ -12,12 +13,22 @@
       if ($('#search').val()) {
         let bloque = '<h4>Resultados de la búsqueda para: <span class="badge badge-secondary">'+$('#search').val()+'</span></h4>';
         $("#resultado").html(bloque);
-        //console.log('first');
       searchProducts($('#search').val());
       $('#search').val('')
       } else {
         getProducts(desde);
       }
+    }
+  });
+
+  $("#btn_buscar").click(function() {
+    if ($('#search').val()) {
+      let bloque = '<h4>Resultados de la búsqueda para: <span class="badge badge-secondary">'+$('#search').val()+'</span></h4>';
+      $("#resultado").html(bloque);
+    searchProducts($('#search').val());
+    $('#search').val('')
+    } else {
+      getProducts(desde);
     }
   });
 
@@ -48,13 +59,28 @@ function getProducts(desde = 0) {
         let lstProduct = data.data.rows;
         total_reg = data.data.count;
         let template = "";
+
         lstProduct.forEach(data => {
+          let image;
+          if((typeof data.url_image) === 'string'){
+            console.log('es string')
+            if(data.url_image == '') {
+              image = "image/image-not-found.png";
+            } else {
+              image = data.url_image;
+            }
+          }
+          if((typeof data.url_image) === 'object'){
+            image = "image/image-not-found.png";
+            console.log(image)
+          }
+          // let image = (data.url_image != null) ? data.url_image : "image/image-not-found.png";
           template +=  ` 
           <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img src="${data.url_image}" width="100%" height="225">
+            <img src="${image}" width="100%" height="225">
             <div class="card-body">
-              <p class="card-text" style="font-size: 12px;">${data.name}</p>
+              <p class="card-text" style="font-size: 0.68rem;">${data.name}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a class="nav-item nav-link"><i class="fas fa-shopping-cart fa-lg" style="color: #06b9c0;"></i></a>
@@ -145,12 +171,26 @@ $("#category").change(function() {
           let lstProduct = data.data.rows;
           let template = "";
           lstProduct.forEach(data => {
+            let image;
+          if((typeof data.url_image) === 'string'){
+            console.log('es string')
+            if(data.url_image == '') {
+              image = "image/image-not-found.png";
+            } else {
+              image = data.url_image;
+            }
+          }
+          if((typeof data.url_image) === 'object'){
+            image = "image/image-not-found.png";
+            console.log(image)
+          }
+
             template +=  ` 
             <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img src="${data.url_image}" width="100%" height="225">
+            <img src="${image}" width="100%" height="225">
             <div class="card-body">
-              <p class="card-text" style="font-size: 12px;">${data.name}</p>
+              <p class="card-text" style="font-size: 0.68rem;">${data.name}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a class="nav-item nav-link"><i class="fas fa-shopping-cart fa-lg" style="color: #06b9c0;"></i></a>
@@ -193,12 +233,26 @@ function searchProducts(search) {
           let lstProduct = data.products;
           let template = "";
           lstProduct.forEach(data => {
+            let image;
+          if((typeof data.url_image) === 'string'){
+            console.log('es string')
+            if(data.url_image == '') {
+              image = "image/image-not-found.png";
+            } else {
+              image = data.url_image;
+            }
+          }
+          if((typeof data.url_image) === 'object'){
+            image = "image/image-not-found.png";
+            console.log(image)
+          }
+
             template += ` 
             <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img src="${data.url_image}" width="100%" height="225">
+            <img src="${image}" width="100%" height="225">
             <div class="card-body">
-              <p class="card-text" style="font-size: 12px;">${data.name}</p>
+              <p class="card-text" style="font-size: 0.68rem;">${data.name}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a class="nav-item nav-link"><i class="fas fa-shopping-cart fa-lg" style="color: #06b9c0;"></i></a>
@@ -223,17 +277,22 @@ $( "#slider-range" ).slider({
   min: 100,
   max: 20000,
   values: [ 100, 20000 ],
-  slide: function( event, ui ) {
-    $( "#amount" ).val( "$" + ui.values[0] + " - $" + ui.values[1] );
+  // change: function( event, ui ) {
+  //   console.log(ui)
+  // },
+  change: function( event, ui ) {
+    // console.log($( "#amount" ).val( "$" + ui.values[0] + " - $" + ui.values[1] ));
     let desde = ui.values[0];
     let hasta = ui.values[1];
+
     const params = new URLSearchParams({
       desde: desde,
       hasta: hasta
     });
 
     $("#resultado").html("");
-    
+
+
     let url = url_base + `api/search/price?${params}`;
     fetch(url, {
       method: "GET"
@@ -247,16 +306,28 @@ $( "#slider-range" ).slider({
           return;
         }
         response.json().then(function(data) {
-          // console.log(data);
           let lstProduct = data.products;
           let template = "";
           lstProduct.forEach(data => {
+            let image;
+          if((typeof data.url_image) === 'string'){
+            console.log('es string')
+            if(data.url_image == '') {
+              image = "image/image-not-found.png";
+            } else {
+              image = data.url_image;
+            }
+          }
+          if((typeof data.url_image) === 'object'){
+            image = "image/image-not-found.png";
+            console.log(image)
+          }
             template +=  ` 
             <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img src="${data.url_image}" width="100%" height="225">
+            <img src="${image}" width="100%" height="225">
             <div class="card-body">
-              <p class="card-text" style="font-size: 12px;">${data.name}</p>
+              <p class="card-text" style="font-size: 0.68rem;">${data.name}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a class="nav-item nav-link"><i class="fas fa-shopping-cart fa-lg" style="color: #06b9c0;"></i></a>
@@ -276,5 +347,7 @@ $( "#slider-range" ).slider({
       });
   }
 });
+
+
 $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
   " - $" + $( "#slider-range" ).slider( "values", 1 ) );
